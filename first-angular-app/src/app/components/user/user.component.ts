@@ -1,4 +1,4 @@
-import { Component, computed, Input, signal } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-user',
@@ -8,26 +8,11 @@ import { Component, computed, Input, signal } from '@angular/core';
   styleUrl: './user.component.scss',
 })
 export class UserComponent {
-  @Input('user') user: { id: string; name: string; avatar: string } | null =
-    null;
-
-  randomNumber = signal({ id: Math.random(), val: Math.random() });
-
-  randomComputedValue = computed(() => {
-    return this.randomNumber().val;
-  });
+  user = input.required<{ avatar: string; id: string; name: string }>();
 
   get userAvatar() {
-    // console.log('getter called');
-    return 'users/' + this.user?.avatar || '';
+    return 'users/' + this.user().avatar;
   }
 
-  //   getUserAvatar() {
-  //     console.log('getUserAvatar called');
-  //     return 'users/' + this.user?.avatar || '';
-  //   }
-
-  onSelectUser() {
-    this.randomNumber.set({ id: Math.random(), val: Math.random() });
-  }
+  onSelectUser() {}
 }

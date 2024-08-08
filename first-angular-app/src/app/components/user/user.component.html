@@ -1,11 +1,10 @@
 <div>
-    <span>{{randomNumber().id}} {{randomComputedValue()}}</span>
     <button (click)="onSelectUser()">
         <!-- Property binding -->
         <!-- Getter Method -->
-        <img [src]="userAvatar" alt="{{user?.avatar}}" />
+        <img [src]="userAvatar" alt="{{user().avatar}}" />
 
         <!-- String interpolation -->
-        <span>{{user?.name}}</span>
+        <span>{{user().name}}</span>
     </button>
 </div>
