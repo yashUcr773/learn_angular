@@ -1,4 +1,4 @@
-import { Component, Input, output, } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'app-user',
@@ -10,7 +10,7 @@ import { Component, Input, output, } from '@angular/core';
 export class UserComponent {
     @Input('user') user!: { id: string; name: string; avatar: string };
 
-    selectedUser = output<{ id: string; name: string; avatar: string }>();
+    @Output('selectedUser') selectedUser = new EventEmitter<{ id: string, name: string, avatar: string }>();
 
     get userAvatar() {
         return 'users/' + this.user?.avatar;
