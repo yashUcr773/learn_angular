@@ -5,6 +5,7 @@ import { UserComponent } from './components/user/user.component';
 import { DUMMY_USERS } from './components/user/dummy-users';
 import { CommonModule } from '@angular/common';
 import { TasksComponent } from "./components/tasks/tasks.component";
+import { User } from './utils/types.utils';
 
 @Component({
     selector: 'app-root',
@@ -16,9 +17,9 @@ import { TasksComponent } from "./components/tasks/tasks.component";
 export class AppComponent {
     title = 'first-angular-app';
     users = DUMMY_USERS;
-    selectedUser?: { id: string; name: string; avatar: string };
+    selectedUser?: User;
 
-    onUserSelect(user: { id: string; name: string; avatar: string }) {
+    onUserSelect(user: User) {
         this.selectedUser = user;
     }
 }

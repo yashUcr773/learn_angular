@@ -1,12 +1,31 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Task, User } from '../../utils/types.utils';
+import { TaskComponent } from "../task/task.component";
+import { DUMMY_TASKS } from './dummy-tasks';
+
 
 @Component({
     selector: 'app-tasks',
     standalone: true,
-    imports: [],
+    imports: [TaskComponent],
     templateUrl: './tasks.component.html',
     styleUrl: './tasks.component.scss'
 })
 export class TasksComponent {
-    @Input('selectedUser') selectedUser?: { id: string; name: string; avatar: string };
+    @Input('selectedUser') selectedUser?: User;
+
+    get userTasks() {
+        return DUMMY_TASKS.filter(task => task.userId === this.selectedUser?.id);
+    }
+
+    onNewTask() {
+
+    }
+
+    onTaskToggle(task: Task) {
+
+    }
+
+    onTaskDelete(task: Task) {
+    }
 }
