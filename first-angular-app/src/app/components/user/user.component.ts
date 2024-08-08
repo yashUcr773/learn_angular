@@ -11,6 +11,12 @@ export class UserComponent {
   @Input('user') user: { id: string; name: string; avatar: string } | null =
     null;
 
+  randomNumber = signal({ id: Math.random(), val: Math.random() });
+
+  randomComputedValue = computed(() => {
+    return this.randomNumber().val;
+  });
+
   get userAvatar() {
     // console.log('getter called');
     return 'users/' + this.user?.avatar || '';
@@ -22,6 +28,6 @@ export class UserComponent {
   //   }
 
   onSelectUser() {
-    console.log('selected');
+    this.randomNumber.set({ id: Math.random(), val: Math.random() });
   }
 }
