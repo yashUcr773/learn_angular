@@ -13,6 +13,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'first-angular-app';
-  users = DUMMY_USERS;
+    title = 'first-angular-app';
+    users = DUMMY_USERS;
+
+    onUserSelect(user: { id: string; name: string; avatar: string }) {
+        console.log(user);
+    }
 }

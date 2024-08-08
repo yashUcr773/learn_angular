@@ -1,18 +1,22 @@
-import { Component, input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-user',
-  standalone: true,
-  imports: [],
-  templateUrl: './user.component.html',
-  styleUrl: './user.component.scss',
+    selector: 'app-user',
+    standalone: true,
+    imports: [],
+    templateUrl: './user.component.html',
+    styleUrl: './user.component.scss',
 })
 export class UserComponent {
-  user = input.required<{ avatar: string; id: string; name: string }>();
+    @Input('user') user!: { id: string; name: string; avatar: string };
 
-  get userAvatar() {
-    return 'users/' + this.user().avatar;
-  }
+    @Output('selectedUser') selectedUser = new EventEmitter();
 
-  onSelectUser() {}
+    get userAvatar() {
+        return 'users/' + this.user?.avatar;
+    }
+
+    onSelectUser() {
+        this.selectedUser.emit(this.user);
+    }
 }
