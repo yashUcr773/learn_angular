@@ -1,15 +1,10 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Task, User } from '../../utils/types.utils';
-import { TaskComponent } from "./task/task.component";
-import { DUMMY_TASKS } from './dummy-tasks';
-import { NewTaskComponent } from "./new-task/new-task.component";
+import { Component, Input } from '@angular/core';
+import { User } from '../../utils/types.utils';
 import { TaskService } from '../../services/tasks.service';
 
 
 @Component({
     selector: 'app-tasks',
-    standalone: true,
-    imports: [TaskComponent, NewTaskComponent],
     templateUrl: './tasks.component.html',
     styleUrl: './tasks.component.scss'
 })
