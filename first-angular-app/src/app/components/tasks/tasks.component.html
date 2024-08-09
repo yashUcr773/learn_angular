@@ -1,7 +1,7 @@
 <section id="tasks">
     <header>
         <h2>
-            {{selectedUser?.name}}'s Tasks
+            {{selectedUser.name}}'s Tasks
         </h2>
         <menu>
             <button (click)="onNewTask()">New Task</button>
@@ -19,5 +19,5 @@
 
 
 @if (showAddTaskModal) {
-<app-new-task (onTaskAdded)="onTaskAdded($event)" [user]="selectedUser!" (onCancel)="onCloseModal()"></app-new-task>
+<app-new-task  [user]="selectedUser!" (onClose)="onCloseModal()"></app-new-task>
 }

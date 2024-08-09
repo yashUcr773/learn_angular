@@ -3,6 +3,7 @@ import { Task, User } from '../../utils/types.utils';
 import { TaskComponent } from "./task/task.component";
 import { DUMMY_TASKS } from './dummy-tasks';
 import { NewTaskComponent } from "./new-task/new-task.component";
+import { TaskService } from '../../services/tasks.service';
 
 
 @Component({
@@ -13,13 +14,15 @@ import { NewTaskComponent } from "./new-task/new-task.component";
     styleUrl: './tasks.component.scss'
 })
 export class TasksComponent implements OnChanges {
-    @Input('selectedUser') selectedUser?: User;
+    @Input('selectedUser') selectedUser!: User;
     tasks: Task[] = DUMMY_TASKS;
     showAddTaskModal = false
 
+    constructor(private taskService: TaskService) { }
+
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['selectedUser']) {
-            this.tasks = DUMMY_TASKS.filter(task => task.userId === this.selectedUser?.id);
+            this.tasks = this.taskService.getUserTasks(this.selectedUser?.id)
         }
     }
 
@@ -29,16 +32,12 @@ export class TasksComponent implements OnChanges {
 
     onCloseModal() {
         this.showAddTaskModal = false;
+        this.tasks = this.taskService.getUserTasks(this.selectedUser?.id)
+
     }
 
     onTaskComplete(task: Task) {
-        this.tasks = this.tasks.filter(d_task => d_task.id !== task.id);
-    }
-
-    onTaskAdded(task: Task) {
-        this.showAddTaskModal = false;
-        DUMMY_TASKS.push(task);
-        this.tasks = DUMMY_TASKS.filter(task => task.userId === this.selectedUser?.id);
+        this.tasks = this.taskService.removeTask(task.id);
     }
 
 }

@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, signal } from '@angular/core';
 import { Task, TaskFormData, User } from '../../../utils/types.utils';
 import { FormsModule } from '@angular/forms';
+import { TaskService } from '../../../services/tasks.service';
 
 @Component({
     selector: 'app-new-task',
@@ -10,9 +11,10 @@ import { FormsModule } from '@angular/forms';
     styleUrl: './new-task.component.scss',
 })
 export class NewTaskComponent {
-    @Output() onTaskAdded = new EventEmitter<Task>();
-    @Output() onCancel = new EventEmitter<void>();
+    @Output() onClose = new EventEmitter<void>();
     @Input() user!: User;
+
+    private taskService = inject(TaskService);
 
     formData = signal<TaskFormData>({
         title: '',
@@ -21,12 +23,11 @@ export class NewTaskComponent {
     })
 
     handleCancel() {
-        this.onCancel.emit();
+        this.onClose.emit();
     }
 
     handleCreate(e: Event) {
         e.preventDefault();
-        console.log("handleCreate")
         const task: Task = {
             id: 't' + Math.floor(Math.random() * 1000),
             userId: this.user.id,
@@ -34,7 +35,8 @@ export class NewTaskComponent {
             summary: this.formData().summary,
             dueDate: this.formData().dueDate,
         }
-        this.onTaskAdded.emit(task)
+        this.taskService.addTask(task);
+        this.onClose.emit()
     }
 
 }
