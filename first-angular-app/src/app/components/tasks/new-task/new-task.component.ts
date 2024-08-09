@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { Task, TaskFormData, User } from '../../../utils/types.utils';
 import { FormsModule } from '@angular/forms';
 
@@ -14,11 +14,11 @@ export class NewTaskComponent {
     @Output() onCancel = new EventEmitter<void>();
     @Input() user!: User;
 
-    formData: TaskFormData = {
+    formData = signal<TaskFormData>({
         title: '',
         summary: '',
         dueDate: ''
-    }
+    })
 
     handleCancel() {
         this.onCancel.emit();
@@ -26,13 +26,15 @@ export class NewTaskComponent {
 
     handleCreate(e: Event) {
         e.preventDefault();
+        console.log("handleCreate")
         const task: Task = {
             id: 't' + Math.floor(Math.random() * 1000),
             userId: this.user.id,
-            title: this.formData.title,
-            summary: this.formData.summary,
-            dueDate: this.formData.dueDate,
+            title: this.formData().title,
+            summary: this.formData().summary,
+            dueDate: this.formData().dueDate,
         }
         this.onTaskAdded.emit(task)
     }
+
 }
