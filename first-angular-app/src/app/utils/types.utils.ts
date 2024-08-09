@@ -11,3 +11,9 @@ export interface User {
     name: string;
     avatar: string;
 }
+
+export interface TaskFormData {
+    title: string;
+    summary: string;
+    dueDate: string;
+}

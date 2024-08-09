@@ -9,11 +9,15 @@
     </header>
 
     <ul>
-        @for (task of userTasks; track task.id) {
+        @for (task of tasks; track task.id) {
         <li>
-            <app-task [task]="task"></app-task>
+            <app-task (onTaskComplete)="onTaskComplete($event)" [task]="task"></app-task>
         </li>
         }
     </ul>
-
 </section>
+
+
+@if (showAddTaskModal) {
+<app-new-task (onTaskAdded)="onTaskAdded($event)" [user]="selectedUser!" (onCancel)="onCloseModal()"></app-new-task>
+}
