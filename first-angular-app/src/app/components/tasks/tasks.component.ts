@@ -13,17 +13,14 @@ import { TaskService } from '../../services/tasks.service';
     templateUrl: './tasks.component.html',
     styleUrl: './tasks.component.scss'
 })
-export class TasksComponent implements OnChanges {
+export class TasksComponent {
     @Input('selectedUser') selectedUser!: User;
-    tasks: Task[] = DUMMY_TASKS;
     showAddTaskModal = false
 
     constructor(private taskService: TaskService) { }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes['selectedUser']) {
-            this.tasks = this.taskService.getUserTasks(this.selectedUser?.id)
-        }
+    get userTasks() {
+        return this.taskService.getUserTasks(this.selectedUser?.id)
     }
 
     onNewTask() {
@@ -32,12 +29,6 @@ export class TasksComponent implements OnChanges {
 
     onCloseModal() {
         this.showAddTaskModal = false;
-        this.tasks = this.taskService.getUserTasks(this.selectedUser?.id)
-
-    }
-
-    onTaskComplete(task: Task) {
-        this.tasks = this.taskService.removeTask(task.id);
     }
 
 }

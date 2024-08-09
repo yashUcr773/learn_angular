@@ -9,9 +9,9 @@
     </header>
 
     <ul>
-        @for (task of tasks; track task.id) {
+        @for (task of userTasks; track task.id) {
         <li>
-            <app-task (onTaskComplete)="onTaskComplete($event)" [task]="task"></app-task>
+            <app-task [task]="task"></app-task>
         </li>
         }
     </ul>
@@ -19,5 +19,5 @@
 
 
 @if (showAddTaskModal) {
-<app-new-task  [user]="selectedUser!" (onClose)="onCloseModal()"></app-new-task>
+<app-new-task [user]="selectedUser!" (onClose)="onCloseModal()"></app-new-task>
 }
