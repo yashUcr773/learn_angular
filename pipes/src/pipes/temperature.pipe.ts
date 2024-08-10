@@ -9,7 +9,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 export class TemperaturePipe implements PipeTransform {
 
     transform(value: number | string, inputType: 'celsius' | 'fahrenheit' = 'celsius', outputType?: 'celsius' | 'fahrenheit'): string {
-        
+
         let val: number = typeof value === 'string' ? parseFloat(value) : value;
 
         if (inputType === 'celsius' && outputType === 'fahrenheit') {
