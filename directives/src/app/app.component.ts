@@ -12,7 +12,8 @@ import { LoggerDirective } from './directives/logger.directive';
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [AuthComponent, LearningResourcesComponent, AuthDirective, CommonModule, LoggerDirective],
+    imports: [AuthComponent, LearningResourcesComponent, AuthDirective, CommonModule],
+    hostDirectives: [LoggerDirective]
 })
 export class AppComponent {
 
