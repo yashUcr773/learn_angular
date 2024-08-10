@@ -1,31 +1,19 @@
-import { Injectable } from "@angular/core";
+import { Injectable, signal } from "@angular/core";
 import { Task, TaskStatus } from "../tasks/task.model";
 
 @Injectable({ providedIn: 'root' })
 export class TasksService {
-    tasks: Task[] = []
-
-    getAllTasks() {
-        return this.tasks;
-    }
+    tasks = signal<Task[]>([])
+    allTasks = this.tasks.asReadonly();
 
     addTask(task: Task) {
-        this.tasks.push(task);
+        this.tasks.update(prev => [...prev, task]);
     }
 
     updateTask(taskId: string, status: TaskStatus) {
-        this.tasks = this.tasks.map(task => {
-            if (task.id === taskId) return { ...task, status }
-            return task
-        });
-    }
-
-    getOpenTasks() {
-        return this.tasks.filter(task => task.status === 'OPEN');
-    }
-
-    getCompletedTasks() {
-        return this.tasks.filter(task => task.status === 'DONE');
+        this.tasks.update(oldTasks => oldTasks.map(task =>
+            task.id === taskId ? { ...task, status } : task
+        ));
     }
 
     getTasksByStatus(status: TaskStatus) {
@@ -34,8 +22,16 @@ export class TasksService {
         return this.getInprogressTasks();
     }
 
+    getOpenTasks() {
+        return this.allTasks().filter(task => task.status === 'OPEN');
+    }
+
+    getCompletedTasks() {
+        return this.allTasks().filter(task => task.status === 'DONE');
+    }
+
     getInprogressTasks() {
-        return this.tasks.filter(task => task.status === 'IN_PROGRESS');
+        return this.allTasks().filter(task => task.status === 'IN_PROGRESS');
     }
 
 }
