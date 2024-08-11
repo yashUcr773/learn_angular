@@ -1,7 +1,7 @@
-import { Component, input, output } from '@angular/core';
+import { Component, DestroyRef, inject, input } from '@angular/core';
 
 import { Place } from './place.model';
-import { HttpClient } from '@angular/common/http';
+import { PlacesService } from './places.service';
 
 @Component({
     selector: 'app-places',
@@ -12,10 +12,32 @@ import { HttpClient } from '@angular/common/http';
 })
 export class PlacesComponent {
     places = input.required<Place[]>();
+    userPlaces = input.required<boolean>();
 
-    constructor(private httpClient: HttpClient) { }
+    private destroyRef = inject(DestroyRef);
+
+    constructor(private placesService: PlacesService) { }
+
+    handlePut(place: Place) {
+        const putPlace = this.placesService.addPlaceToUserPlaces(place).subscribe();
+
+        this.destroyRef.onDestroy(() => {
+            putPlace.unsubscribe();
+        })
+    }
+
+    handleDelete(place: Place) {
+        const deletePlace = this.placesService.removeUserPlace(place).subscribe();
+
+        this.destroyRef.onDestroy(() => {
+            deletePlace.unsubscribe();
+        })
+    }
 
     onSelectPlace(place: Place) {
-        this.httpClient.put('http://localhost:3000/user-places', { placeId: place.id }).subscribe();
+        if (this.userPlaces()) {
+            return this.handleDelete(place)
+        }
+        return this.handlePut(place);
     }
 }

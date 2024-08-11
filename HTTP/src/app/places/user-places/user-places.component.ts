@@ -3,7 +3,7 @@ import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { PlacesContainerComponent } from '../places-container/places-container.component';
 import { PlacesComponent } from '../places.component';
 import { Place } from '../place.model';
-import { HttpClient } from '@angular/common/http';
+import { PlacesService } from '../places.service';
 
 @Component({
     selector: 'app-user-places',
@@ -13,18 +13,15 @@ import { HttpClient } from '@angular/common/http';
     imports: [PlacesContainerComponent, PlacesComponent],
 })
 export class UserPlacesComponent {
-    places = signal<Place[] | undefined>(undefined);
-    private httpClient = inject(HttpClient);
+    private placesService = inject(PlacesService);
+    places = this.placesService.loadedUserPlaces;
     private destroyRef = inject(DestroyRef)
     isLoading = signal<boolean>(true);
     isError = signal<boolean>(false);
     ngOnInit() {
 
-        const placesData = this.httpClient.get<{ places: Place[] }>('http://localhost:3000/user-places')
+        const placesData = this.placesService.loadUserPlaces()
             .subscribe({
-                next: (places) => {
-                    this.places.set(places.places);
-                },
                 error: (error) => {
                     console.log(error);
                     this.isError.set(true);

@@ -5,7 +5,7 @@
     <p class="fallback-text">An error occurred. Please try again later.</p>
     } @else {
     @if (places()) {
-    <app-places [places]="places()!" />
+    <app-places [userPlaces]="true" [places]="places()!" />
     } @else if (places()?.length === 0) {
     <p class="fallback-text">Unfortunately, no places could be found.</p>
     }

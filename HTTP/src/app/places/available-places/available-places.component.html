@@ -1,15 +1,15 @@
 <app-places-container title="Available Places">
 
     @if (isLoading() && !isError()) {
-        <p class="fallback-text">Loading...</p>
+    <p class="fallback-text">Loading...</p>
     }@else if (isError()) {
-        <p class="fallback-text">An error occurred. Please try again later.</p>
+    <p class="fallback-text">An error occurred. Please try again later.</p>
     } @else {
-        @if (places()) {
-            <app-places [places]="places()!" />
-        } @else if (places()?.length === 0) {
-            <p class="fallback-text">Unfortunately, no places could be found.</p>
-        }
+    @if (places()) {
+    <app-places [userPlaces]="false" [places]="places()!" />
+    } @else if (places()?.length === 0) {
+    <p class="fallback-text">Unfortunately, no places could be found.</p>
     }
-    
+    }
+
 </app-places-container>
