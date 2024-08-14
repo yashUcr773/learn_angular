@@ -41,4 +41,15 @@
   </p>
 </section>
 
+@defer(on timer(5s)) {
 <app-offer-preview />
+}
+@loading(minimum 2s) {
+<p class="fallback">Loading...</p>
+}
+@error {
+<p class="fallback">An error occurred!</p>
+}
+@placeholder {
+<p class="fallback">We might have an offer</p>
+}
