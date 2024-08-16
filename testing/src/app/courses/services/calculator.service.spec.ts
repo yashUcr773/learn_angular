@@ -19,14 +19,14 @@ describe('CalculatorService', () => {
         calculatorService = TestBed.inject(CalculatorService);
     });
 
-    xit('should add two numbers', () => {
+    it('should add two numbers', () => {
 
         const result = calculatorService.add(4, 7);
         expect(result).withContext('Addition Failed').toBe(11);
         expect(loggerSpy.log).withContext('Logger invoked multiple times').toHaveBeenCalledTimes(1);
     });
 
-    fit('should subtract two numbers', () => {
+    it('should subtract two numbers', () => {
 
         const result = calculatorService.subtract(4, 7);
         expect(result).withContext('Subtraction Failed').toBe(-3);
