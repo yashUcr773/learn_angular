@@ -8,7 +8,7 @@ export interface Course {
     iconUrl: string;
     uploadedImageUrl?: string;
     courseListIcon?: string;
-    category: string;
+    category: 'BEGINNER' | 'ADVANCED';
     lessonsCount?: number;
     url?: string
 }
