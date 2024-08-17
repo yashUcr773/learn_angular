@@ -1,3 +1,5 @@
+# moved to root directory of repo
+
 language: node_js
 node_js:
   - 20
@@ -9,6 +11,7 @@ cache:
   npm: true
   directories:
     - ~/.cache
+before_install: cd testing
 install:
   - npm ci
 script:
