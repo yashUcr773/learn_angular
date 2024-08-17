@@ -1,8 +1,6 @@
-# moved to root directory of repo
-
 language: node_js
 node_js:
-  - 20
+  - 18
 addons:
   apt:
     packages:
