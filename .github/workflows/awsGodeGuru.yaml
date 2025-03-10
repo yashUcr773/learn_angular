@@ -24,7 +24,7 @@ jobs:
           fetch-depth: 0
 
       - name: Configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::897722693320:role/github-sts
           aws-region: us-west-2
